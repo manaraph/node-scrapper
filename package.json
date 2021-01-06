@@ -1,0 +1,25 @@
+{
+  "name": "node-scrapper",
+  "version": "1.0.0",
+  "description": "Node scrapper",
+  "main": "index.js",
+  "dependencies": {
+    "puppeteer": "^5.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manaraph/node-scrapper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/manaraph/node-scrapper/issues"
+  },
+  "homepage": "https://github.com/manaraph/node-scrapper#readme"
+}
