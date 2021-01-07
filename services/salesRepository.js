@@ -32,7 +32,7 @@ class EventRepository {
   
   erase() {
     return this.dao.run(
-      `TRUNCATE TABLE sales`
+      `DROP TABLE IF EXISTS sales;`
     )
   }
 }
