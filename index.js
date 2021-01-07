@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const cron = require('node-cron');
-const { getSales } = require('./services/botService');
+const { getSales } = require('./services/util');
 const routes = require('./routes');
 
 const PORT = 5000;
@@ -35,7 +35,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.use('/api/v1', routes);
 
 // Schedule tasks to run daily on the server.
-cron.schedule('* * * * *', async () => {
+cron.schedule('0 0 * * *', async () => {
   await getSales();
 });
 

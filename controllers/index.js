@@ -1,6 +1,6 @@
 // const { salesRepo } = require('../services');
 
-const { getSales } = require('../services/botService');
+const { getSales } = require('../services/util');
 
 const getDailySales = async (req, res) => {
 	const data = await getSales();
