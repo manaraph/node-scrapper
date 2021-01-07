@@ -1,6 +1,4 @@
-// const { salesRepo } = require('../services');
-
-const { getSales } = require('../services/util');
+const { getSales, saveSales } = require('../services/util');
 
 const getDailySales = async (req, res) => {
 	const data = await getSales();
@@ -10,6 +8,16 @@ const getDailySales = async (req, res) => {
 	});
 };
 
+const createDailySale = async (req, res) => {
+	const { ps5Sales, xboxSales, date, responseTime } = req.body
+	const { data } = await saveSales(ps5Sales, xboxSales, date, responseTime);
+	return res.status(200).json({
+		status: 'success',
+		data,
+	});
+};
+
 module.exports = {
 	getDailySales,
+	createDailySale,
 };;

@@ -6,17 +6,18 @@ class EventRepository {
   createTable() {
     const sql = `
     CREATE TABLE IF NOT EXISTS sales (
-      id INTEGER PRIMARY KEY,
-      date DATETIME,
-      ps5_sales INTEGER,
-      xbox_sales INTEGER`;
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      date TEXT,
+      ps5Sales TEXT,
+      xboxSales TEXT,
+      responseTime TEXT)`;
     return this.dao.run(sql)
   }
   
-  create(id, date, ps5_sales, xbox_sales) {
+  create(ps5Sales, xboxSales, date, responseTime) {
 		return this.dao.run(
-			'INSERT INTO events (id, date, ps5_sales, xbox_sales) VALUES (?, ?, ?, ?)',
-			[id, date, ps5_sales, xbox_sales])
+			'INSERT INTO sales (ps5Sales, xboxSales, date, responseTime) VALUES (?, ?, ?, ?)',
+			[ps5Sales, xboxSales, date, responseTime])
   }
 
   getAll() {

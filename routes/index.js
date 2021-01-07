@@ -1,5 +1,5 @@
 const express = require('express');
-const { getDailySales } = require('../controllers');
+const { getDailySales, createDailySale } = require('../controllers');
 
 const router = express.Router();
 
@@ -11,5 +11,6 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/sales', getDailySales);
+router.post('/sales', createDailySale);
 
 module.exports = router;

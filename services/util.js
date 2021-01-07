@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const { salesRepo } = require('.');
 
 const getDateOnly = (datetime) =>
   `${datetime.getMonth() + 1}/${datetime.getDate()}/${datetime.getFullYear()}`;
@@ -54,12 +55,22 @@ const getSales = async () => {
     responseTime,
     ps5Sales,
     xboxSales,
+    date: today,
   };
   return data;
 };
+
+const saveSales = async (ps5Sales, xboxSales, date, responseTime) => {
+	const data = await salesRepo.create(ps5Sales, xboxSales, date, responseTime);
+	return {
+		status: 'success',
+		data,
+	};
+}
 
 module.exports = {
   scrapper,
   getSales,
   getDateOnly,
+  saveSales,
 };

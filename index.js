@@ -7,6 +7,7 @@ const cors = require('cors');
 const cron = require('node-cron');
 const { getSales } = require('./services/util');
 const routes = require('./routes');
+const DB = require('./services');
 
 const PORT = 5000;
 
@@ -14,6 +15,7 @@ const PORT = 5000;
  * express application
  */
 const app = express();
+DB.start();
 const server = http.Server(app);
 const logDate = new Date().toISOString().substring(0, 10);
 if (!fs.existsSync('logs')) {
@@ -30,7 +32,10 @@ app.use(
     { stream: accessLogStream }
   )
 );
+
 app.use(cors({ origin: true, credentials: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1', routes);
 
