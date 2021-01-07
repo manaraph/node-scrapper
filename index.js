@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const cron = require('node-cron');
-const { scrapper } = require('./botController');
+const { scrapper } = require('./services/botService');
 const PORT = 5000;
 
 /**
