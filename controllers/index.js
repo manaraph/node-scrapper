@@ -35,6 +35,15 @@ const getSalesByDate = async (req, res) => {
   });
 };
 
+const eraseARecord = async (req, res) => {
+	const { date } = req.query;
+	const data = await salesRepo.deleteSalesByDate(date);
+  res.status(200).json({
+    status: 'success',
+    data,
+  });
+};
+
 const eraseSales = async (req, res) => {
 	const data = await salesRepo.erase();
 	initiateDB();
@@ -48,6 +57,7 @@ module.exports = {
   getDailySales,
   createDailySale,
   getAllSales,
-  getSalesByDate,
-  eraseSales,
+	getSalesByDate,
+	eraseARecord,
+	eraseSales,
 };

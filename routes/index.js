@@ -1,5 +1,5 @@
 const express = require('express');
-const { getDailySales, createDailySale, getAllSales, getSalesByDate, eraseSales } = require('../controllers');
+const { getDailySales, createDailySale, getAllSales, getSalesByDate, eraseSales, eraseARecord } = require('../controllers');
 
 const router = express.Router();
 
@@ -14,6 +14,7 @@ router.get('/sales', getDailySales);
 router.post('/sales', createDailySale);
 router.get('/sales/getAll', getAllSales);
 router.get('/sales/byDate', getSalesByDate);
+router.delete('/sales/byDate', eraseARecord);
 router.delete('/sales/erase', eraseSales);
 
 module.exports = router;

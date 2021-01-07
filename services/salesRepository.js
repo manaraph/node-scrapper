@@ -29,6 +29,12 @@ class SalesRepository {
       `SELECT * FROM sales WHERE date = ?`,
       [date])
   }
+
+  deleteSalesByDate(date) {
+    return this.dao.get(
+      `DELETE FROM sales WHERE date = ?`,
+      [date])
+  }
   
   erase() {
     return this.dao.run(
