@@ -28,6 +28,26 @@ const scrapper = async (url) => {
   return data;
 };
 
+const getSales = async () => {
+  const start = new Date().getTime();
+  const ps5Sales = await scrapper(
+    'https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313&_nkw=ps5&_sacat=0'
+  );
+  const xboxSales = await scrapper(
+    'https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1312&_nkw=xbox+series+x&_sacat=0&LH_TitleDesc=0&_osacat=0&_odkw=ps5'
+  );
+  const end = new Date().getTime();
+  const responseTime = end - start;
+  const data = {
+    responseTime,
+    ps5Sales,
+    xboxSales,
+  };
+  console.log(data);
+  return data;
+}
+
 module.exports = {
   scrapper,
+  getSales,
 };

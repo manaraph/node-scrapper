@@ -5,7 +5,9 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const cron = require('node-cron');
-const { scrapper } = require('./services/botService');
+const { getSales } = require('./services/botService');
+const routes = require('./routes');
+
 const PORT = 5000;
 
 /**
@@ -30,22 +32,11 @@ app.use(
 );
 app.use(cors({ origin: true, credentials: true }));
 
+app.use('/api/v1', routes);
+
 // Schedule tasks to run daily on the server.
 cron.schedule('* * * * *', async () => {
-  const start = new Date().getTime();
-  const ps5Sales = await scrapper(
-    'https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313&_nkw=ps5&_sacat=0'
-  );
-  const xboxSales = await scrapper(
-    'https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1312&_nkw=xbox+series+x&_sacat=0&LH_TitleDesc=0&_osacat=0&_odkw=ps5'
-  );
-  console.log({
-    ps5Sales,
-    xboxSales,
-  });
-  const end = new Date().getTime();
-  const time = end - start;
-  console.log(time);
+  await getSales();
 });
 
 server.listen(PORT, () => {
