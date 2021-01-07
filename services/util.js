@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const { salesRepo } = require('.');
 
+// Get formatted date
 const getDateOnly = (datetime) =>
   `${datetime.getMonth() + 1}/${datetime.getDate()}/${datetime.getFullYear()}`;
 
@@ -20,6 +21,8 @@ const scrapper = async (url) => {
     const list = [].slice.call(nodes);
     let total = 0;
     let plusIncluded = false;
+    
+    // Get total sales count
     list.forEach((node) => {
       const nodeText = node.innerText;
       if (nodeText.includes('sold')) {
@@ -38,9 +41,13 @@ const scrapper = async (url) => {
 
 const getSales = async () => {
   const start = new Date().getTime();
+  
+  // Scrap ebay for Ps5 sales count
   const { total: ps5Count, plusIncluded: ps5PlusIncluded } = await scrapper(
     'https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313&_nkw=ps5&_sacat=0'
   );
+
+  // Scrap ebay for Xbox sales count
   const {total: xboxCount, plusIncluded: xboxPlusIncluded} = await scrapper(
     'https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1312&_nkw=xbox+series+x&_sacat=0&LH_TitleDesc=0&_osacat=0&_odkw=ps5'
   );

@@ -23,10 +23,13 @@ if (!fs.existsSync('logs')) {
   fs.mkdirSync('logs');
 }
 
+// Create log file
 const accessLogStream = fs.createWriteStream(
   path.join(__dirname, `./logs/${logDate}.log`),
   { flags: 'a+' }
 );
+
+// Create cron log file
 const cronLogs = path.join(__dirname, `./logs/cron/${logDate}.log`);
 const logger = createLogger({
   level: 'info',
@@ -34,6 +37,7 @@ const logger = createLogger({
   transports: [new transports.File({ filename: cronLogs, level: 'info' })],
 });
 
+// Send specific information to morgan for logging
 app.use(
   morgan(
     ':remote-addr\t\t:remote-user\t\t:date\t\t":method :url HTTP/:http-version"\t\t:status\t\t:response-time ms\t\t:res[content-length]\t\t":referrer"\t\t":user-agent"',
@@ -56,8 +60,8 @@ app.use((req, res, next) => {
 });
 
 // Schedule tasks to run daily on the server.
-// cron.schedule('0 0 * * *', async () => {
-cron.schedule('* * * * *', async () => {
+cron.schedule('0 0 * * *', async () => {
+// cron.schedule('* * * * *', async () => {
   const { ps5Sales, xboxSales, date, responseTime } = await getSales();
   const salesLog = await saveSales(ps5Sales, xboxSales, date, responseTime);
   logger.log('info', salesLog);
