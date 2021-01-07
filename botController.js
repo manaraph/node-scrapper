@@ -14,16 +14,6 @@ const scrapper = async (url) => {
       '#srp-river-results > ul > li > div > div.s-item__info.clearfix > div.s-item__details.clearfix > div > span > span'
     );
     const list = [].slice.call(nodes);
-    // const total = list.reduce((accumulator, node)  => {
-    //   const current = node.innerText;
-    //   if (current.includes('sold')) {
-    //     const amount = current.split(' ')[0];
-    //     // amount.includes('+') ? 
-    //     const currentSold = amount.split('+')[0];
-    //     accumulator + currentSold;
-    //   }
-    // }, 0)
-
     const sold = list
       .map( (e) => {
         return e.innerText;
@@ -35,7 +25,6 @@ const scrapper = async (url) => {
   });
 
   await browser.close();
-  console.log(data);
   return data;
 };
 
