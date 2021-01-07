@@ -4,7 +4,7 @@ const SalesRepository = require('./salesRepository');
 const dao = new AppDAO('./salesbot.sqlite3');
 const salesRepo = new SalesRepository(dao);
 
-const start = async () => {
+const initiateDB = async () => {
 	try {
 		await salesRepo.createTable();
 		console.log('Database Initiated.');
@@ -14,6 +14,6 @@ const start = async () => {
 } 
 
 module.exports = {
-	start,
+	initiateDB,
 	salesRepo,
 };

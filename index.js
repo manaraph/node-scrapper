@@ -5,9 +5,10 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const cron = require('node-cron');
-const { getSales } = require('./services/util');
+const { getSales, saveSales } = require('./services/util');
 const routes = require('./routes');
-const DB = require('./services');
+const { initiateDB } = require('./services');
+const { createLogger, transports, format } = require('winston');
 
 const PORT = 5000;
 
@@ -15,7 +16,7 @@ const PORT = 5000;
  * express application
  */
 const app = express();
-DB.start();
+initiateDB();
 const server = http.Server(app);
 const logDate = new Date().toISOString().substring(0, 10);
 if (!fs.existsSync('logs')) {
@@ -26,6 +27,13 @@ const accessLogStream = fs.createWriteStream(
   path.join(__dirname, `./logs/${logDate}.log`),
   { flags: 'a+' }
 );
+const cronLogs = path.join(__dirname, `./logs/cron/${logDate}.log`);
+const logger = createLogger({
+  level: 'info',
+  format: format.combine(format.json(), format.timestamp()),
+  transports: [new transports.File({ filename: cronLogs, level: 'info' })],
+});
+
 app.use(
   morgan(
     ':remote-addr\t\t:remote-user\t\t:date\t\t":method :url HTTP/:http-version"\t\t:status\t\t:response-time ms\t\t:res[content-length]\t\t":referrer"\t\t":user-agent"',
@@ -48,8 +56,11 @@ app.use((req, res, next) => {
 });
 
 // Schedule tasks to run daily on the server.
-cron.schedule('0 0 * * *', async () => {
-  await getSales();
+// cron.schedule('0 0 * * *', async () => {
+cron.schedule('* * * * *', async () => {
+  const { ps5Sales, xboxSales, date, responseTime } = await getSales();
+  const salesLog = await saveSales(ps5Sales, xboxSales, date, responseTime);
+  logger.log('info', salesLog);
 });
 
 server.listen(PORT, () => {

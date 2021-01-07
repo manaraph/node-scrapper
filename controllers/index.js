@@ -1,4 +1,4 @@
-const { salesRepo } = require('../services');
+const { salesRepo, initiateDB } = require('../services');
 const { getSales, saveSales } = require('../services/util');
 
 const getDailySales = async (req, res) => {
@@ -36,7 +36,8 @@ const getSalesByDate = async (req, res) => {
 };
 
 const eraseSales = async (req, res) => {
-  const data = await salesRepo.erase();
+	const data = await salesRepo.erase();
+	initiateDB();
   res.status(200).json({
     status: 'success',
     data,

@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const { salesRepo } = require('.');
 
 const getDateOnly = (datetime) =>
-  `${datetime.getMonth() + 1}-${datetime.getDate()}-${datetime.getFullYear()}`;
+  `${datetime.getMonth() + 1}/${datetime.getDate()}/${datetime.getFullYear()}`;
 
 const scrapper = async (url) => {
   // Launch the browser
