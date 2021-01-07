@@ -18,13 +18,26 @@ if (!fs.existsSync('logs')) {
   fs.mkdirSync('logs');
 }
 
-const accessLogStream = fs.createWriteStream(path.join(__dirname, `./logs/${logDate}.log`), { flags: 'a+' });
-app.use(morgan(':remote-addr\t\t:remote-user\t\t:date\t\t":method :url HTTP/:http-version"\t\t:status\t\t:response-time ms\t\t:res[content-length]\t\t":referrer"\t\t":user-agent"', { stream: accessLogStream }));
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, `./logs/${logDate}.log`),
+  { flags: 'a+' }
+);
+app.use(
+  morgan(
+    ':remote-addr\t\t:remote-user\t\t:date\t\t":method :url HTTP/:http-version"\t\t:status\t\t:response-time ms\t\t:res[content-length]\t\t":referrer"\t\t":user-agent"',
+    { stream: accessLogStream }
+  )
+);
 app.use(cors({ origin: true, credentials: true }));
 
 // Schedule tasks to run daily on the server.
-cron.schedule('0 0 * * *', async () => {
-  await scrapper();
+cron.schedule('* * * * *', async () => {
+  const start = new Date().getTime();
+  const ps5Sales = await scrapper('https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313&_nkw=ps5&_sacat=0');
+  const xboxSales = await scrapper('https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1312&_nkw=xbox+series+x&_sacat=0&LH_TitleDesc=0&_osacat=0&_odkw=ps5');
+  const end = new Date().getTime();
+  const time = end - start;
+  console.log(time);
 });
 
 server.listen(PORT, () => {
