@@ -2,7 +2,7 @@
 
 const { getSales } = require('../services/botService');
 
-const getSalesForToday = async (req, res) => {
+const getDailySales = async (req, res) => {
 	const data = await getSales();
 	res.status(200).json({
 		status: 'success',
@@ -11,5 +11,5 @@ const getSalesForToday = async (req, res) => {
 };
 
 module.exports = {
-	getSalesForToday,
+	getDailySales,
 };;
