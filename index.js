@@ -39,6 +39,14 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1', routes);
 
+// Catch none-existing routes and other errors
+app.use((req, res, next) => {
+  return res.status(404).json({
+    status: 'error',
+    message: 'Route not found.',
+  });
+});
+
 // Schedule tasks to run daily on the server.
 cron.schedule('0 0 * * *', async () => {
   await getSales();

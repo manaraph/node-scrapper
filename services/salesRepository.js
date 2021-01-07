@@ -1,4 +1,4 @@
-class EventRepository {
+class SalesRepository {
   constructor(dao) {
     this.dao = dao;
   }
@@ -26,7 +26,7 @@ class EventRepository {
 
   getSalesByDate(date) {
     return this.dao.get(
-      `SELECT * FROM events WHERE date = ?`,
+      `SELECT * FROM sales WHERE date = ?`,
       [date])
   }
   
@@ -37,4 +37,4 @@ class EventRepository {
   }
 }
   
-module.exports = EventRepository;
+module.exports = SalesRepository;
