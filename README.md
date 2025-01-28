@@ -1,5 +1,5 @@
 # node-scrapper
-A puppeteer bot in Node.js that pulls and spits out the number of sold PS5’s and Xbox Series X per day on eBay.
+A puppeteer bot in Node.js that pulls and spits out(extract) the number of sold PS5’s and Xbox Series X per day on eBay.
 
 ## Getting Started
 ### Running the App
